@@ -1,5 +1,5 @@
 // import io from 'socket.io-client';
-console.log('gelo')
+
 const spotIMServer = "https://spotim-demo-chat-server.herokuapp.com"
 const spotIMChannel = (`${spotIMServer}/chat`)
 console.log(`connecting to ${spotIMChannel}`)
@@ -47,5 +47,35 @@ document.addEventListener("submit", ()=>{
     //hide form
     const form = document.getElementById("login");
     form.hidden = true  
-
+    //create button
+    createButton();
 })
+
+function createButton(){
+    const newButton = document.getElementById('emitter')
+    newButton.innerHTML = `<button id="emitter">Click Here to Emit</button>`
+    newButton.addEventListener('click',()=>{
+        emitButton();
+    })
+    
+}
+function emitButton(){
+    listen();
+    myEmitter();
+    console.log("finished function")
+}
+function listen(){
+    console.log("setting up listener")
+    socket.addEventListener('*',(event)=>{
+        console.log(event);
+    })
+}
+function myEmitter(){
+    emittionObject ={
+        currentName:user.userName,
+        currentImg:user.imgUrl,
+        date:new Date(),
+        message:"hello world"
+    }
+    socket.emit(emittionObject)
+}

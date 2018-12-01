@@ -1,22 +1,49 @@
+@import url('https://fonts.googleapis.com/css?family=Rubik');
+
+
 #login{
     margin: auto;
+    margin-top:150px;
     text-align:center;
 }
 
+header{
+    text-align:center;
+    font-family: 'Rubik', sans-serif;
+    font-size:26px;
+    overflow: hidden;
+    position: fixed; /* Set the navbar to fixed position */
+    top: 0; /* Position the navbar at the top of the page */
+    width: 100%;
+    padding:20px;
+    background-color: #283848;
+    color:white;
+}
+
 input{
-    
+    font-family: 'Rubik', sans-serif;
+
     padding:10px;
     width: 150px;
-    border: 2px solid grey;
+    border: 2px solid #283848;
     font-size:16px;
 }
 
 input[type="submit"]{
-    background:black;
-    border: 2px solid black;
+    background:#283848;
+    border: 2px solid #283848;;
     color:white;
     width:200px;
 }
 input[type="url"]{
     width:240px;
 }
+#emitter{
+    /* background:#283848;
+    border: 2px solid #283848;;
+    color:white; */
+    margin-top:100px;
+    padding:20px;
+    text-align:center;
+}
+
