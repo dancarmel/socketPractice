@@ -6,6 +6,11 @@ console.log(`connecting to ${spotIMChannel}`)
 // const socket = io(spotIMChannel)(console.log(`connected to ${spotIMChannel}`));
 const socket = io(spotIMChannel);
 
+
+// LOG IN
+
+
+//USER OBJECT WITH USER PROPERTIES
 user = {
     userName:'hi',
     password:'he',
@@ -13,24 +18,28 @@ user = {
     
 }
 
-function saveUser(userName,password,imgUrl){
-    userName = user.userName;
-    password = user.password;
-    imgUrl = user.imgUrl;
-    console.log(user)
+let locStorage = window.localStorage;
+
+// function that overrides the user object values
+function saveUser(name,pass,img){
+    user.userName = name;
+    user.password = pass;
+    user.imgUrl = img;
 
 } 
 
-
-document.addEventListener("submit", ()=>{
-    console.log("hi");
-    const form = document.getElementById("login");
+// form submittion event will save all input values in local storage and pass them to user object
+document.addEventListener("submit", ()=>{    
+    //get all input elements
     const inputs = document.getElementsByTagName("input");
-    userArray = []
-    for(i in inputs){
-        userArray.push(i);
-    }
-    saveUser(userArray[0],userArray[1], userArray[2]);
-    console.log(user)
+    //save each input to the corresponding property
+    saveUser(inputs[0].value,inputs[1].value,inputs[2].value)
+    //save all input user data to localstorage for future use
+    locStorage.setItem("username", (user.userName));
+    locStorage.setItem("password", (user.password));
+    locStorage.setItem("imgUrl", (user.imgUrl));
+    //hide form
+    const form = document.getElementById("login");
     form.hidden = true  
+
 })
