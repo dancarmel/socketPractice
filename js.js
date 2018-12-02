@@ -1,16 +1,16 @@
-// import io from 'socket.io-client';
+
 
 const spotIMServer = "https://spotim-demo-chat-server.herokuapp.com"
 const spotIMChannel = (`${spotIMServer}/chat`)
 console.log(`connecting to ${spotIMChannel}`)
-// const socket = io(spotIMChannel)(console.log(`connected to ${spotIMChannel}`));
+
 const socket = io(spotIMChannel);
 
 
-// LOG IN
 
 
-//USER OBJECT WITH USER PROPERTIES
+
+
 user = {
     userName:'hi',
     password:'he',
@@ -20,18 +20,18 @@ user = {
 
 let locStorage = window.localStorage;
 
-// function that overrides the user object values
+
 function saveUser(name,pass,img){
     user.userName = name;
     user.password = pass;
     user.imgUrl = img;
 } 
-//authentication
+
 function authenticate(){
     return true
 }
 
-// form submittion event will save all input values in local storage and pass them to user object
+
 document.addEventListener("submit", ()=>{    
     //get all input elements
     const inputs = document.getElementsByTagName("input");
@@ -61,21 +61,22 @@ function createButton(){
 }
 function emitButton(){
     listen();
-    myEmitter();
-    console.log("finished function")
+    sendMessage();
 }
 function listen(){
-    console.log("setting up listener")
-    socket.addEventListener('*',(event)=>{
+
+    socket.on('*',(event)=>{
+        socket.send('hello')
         console.log(event);
+        console.log('hello')
     })
 }
-function myEmitter(){
-    emittionObject ={
+function sendMessage(){
+    emissionObject ={
         currentName:user.userName,
         currentImg:user.imgUrl,
-        date:new Date(),
+        date:new Date().getTime,
         message:"hello world"
     }
-    socket.emit(emittionObject)
+    socket.emit(emissionObject)
 }
