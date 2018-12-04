@@ -10,16 +10,6 @@
     when clicking the button
 */
 
-// import io from 'socket.io-client';
-
-const spotIMServer = "https://spotim-demo-chat-server.herokuapp.com"
-const spotIMChannel = (`${spotIMServer}/chat`)
-console.log(`connecting to ${spotIMChannel}`)
-
-const socket = io(spotIMChannel);
-
-
-
 
 
 
@@ -32,13 +22,12 @@ user = {
 
 let locStorage = window.localStorage;
 
-// function that overrides the user object values
 function saveUser(name, pass, img) {
     user.userName = name;
     user.password = pass;
     user.imgUrl = img;
 }
-//authentication
+
 function authenticate() {
     return true
 }
@@ -56,10 +45,8 @@ document.addEventListener("submit", () => {
     locStorage.setItem("isAuthenticated", (true));
     locStorage.setItem("imgUrl", (user.imgUrl));
 
-    //hide form
     const form = document.getElementById("login");
-    form.hidden = true
-    //create button
+    form.hidden = true    
     createButton();
 })
 
@@ -72,16 +59,25 @@ function createButton() {
 
 }
 function emitButton() {
-    listen();
-    sendMessage();
-}
-function listen(){
+    // listen();
+    // sendMessage();
+    const spotIMServer = "https://spotim-demo-chat-server.herokuapp.com"
+    // const spotIMChannel = (`${spotIMServer}spotim/chat`)
+    // console.log(`connecting to ${spotIMChannel}`)
 
-    socket.on('*',(event)=>{
-        socket.send('hello')
-        console.log(event);
+    const socket = io.connect(spotIMServer);
+    const room = "/spotim/chat";   
+    socket.on('connect',()=>{
+        socket.emit(sendMessage.emissionObject,room)
         console.log('hello')
     })
+    listen(socket);
+}
+function listen(i){
+    i.on('message', (data)=> {
+        console.log('Incoming message:', data)})
+    
+    
 }
 function sendMessage(){
     emissionObject ={
