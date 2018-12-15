@@ -1,10 +1,7 @@
 const server = "https://spotim-demo-chat-server.herokuapp.com"
 const room = "spotim/chat"; 
 
-
-
-/// user related code
-
+// USER DATA AND AUTHENTICATION
 user = {
     userName: 'hi',
     password: 'he',
@@ -30,7 +27,7 @@ function saveUserDataToLocalStorage(){
     locStorage.setItem("imgUrl", (user.imgUrl));
 }
 
-// enable to log into chat and message room
+// POST-SUBMIT ACTIONS (HIDE THE FORM AND CREATE THE CHAT LOGIN BUTTON)
 
 function hideForm(id){
     const form = document.getElementById(id);
@@ -47,7 +44,7 @@ function createButton() {
     })
 }
 
-// socket related code
+// START SOCKET TO SPOTIM ROOM
 function launchSocket(){
     const socket = io(server);
     socket.on('connect', ()=>{
@@ -67,14 +64,7 @@ function launchSocket(){
     })
 }
 
-
-// emissionObject ={
-//         currentName:user.userName,
-//         currentImg:user.imgUrl,
-//         date:new Date().getTime,
-//         message:"hello world"
-//     }
-
+// POST-SUBMIT EXECUTION : LISTEN FOR THE FORM SUBMIT, THEN RUN AUTHENTICATION, STORAGE, HIDE FORM, CREATE BUTTON AND LAUNCH SOCKET
 document.addEventListener("submit", () => {
     authenticate();
     saveUserDataToLocalStorage();
