@@ -64,21 +64,15 @@ function emitButton() {
     const spotIMServer = "https://spotim-demo-chat-server.herokuapp.com"
     // const spotIMChannel = (`${spotIMServer}spotim/chat`)
     // console.log(`connecting to ${spotIMChannel}`)
-
     const socket = io.connect(spotIMServer);
     const room = "/spotim/chat";   
-    socket.on('connect',()=>{
-        socket.emit(sendMessage.emissionObject,room)
+    socket.on('connect',room,()=>{
         console.log('hello')
-    })
-    listen(socket);
-}
-function listen(i){
-    i.on('message', (data)=> {
-        console.log('Incoming message:', data)})
-    
-    
-}
+        })
+    socket.emit('message',room,(data)=>{
+        console.log(data)
+    })}
+
 function sendMessage(){
     emissionObject ={
         currentName:user.userName,
