@@ -7,10 +7,8 @@ user = {
     password: 'he',
     imgUrl: 'https://new.com'
 }
-function saveUser(name, pass, img) {
-    user.userName = name;
-    user.password = pass;
-    user.imgUrl = img;
+function saveUserProperty(property) {
+    user[property] = property;
 }
 
 function authenticate() {
@@ -20,7 +18,9 @@ function authenticate() {
 function saveUserDataToLocalStorage(){
     let locStorage = window.localStorage;
     const inputs = document.getElementsByTagName("input");
-    saveUser(inputs[0].value, inputs[1].value, inputs[2].value);
+    for (const input of inputs) {
+        saveUserProperty(input.value);
+    }
     //save all input user data to localstorage for future use
     locStorage.setItem("username", (user.userName));
     locStorage.setItem("isAuthenticated", (true));

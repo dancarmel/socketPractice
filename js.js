@@ -22,13 +22,12 @@ user = {
 
 let locStorage = window.localStorage;
 
-function saveUser(name, pass, img) {
-    user.userName = name;
-    user.password = pass;
-    user.imgUrl = img;
+function saveUserProperty(property) {
+    user[property] = property;
 }
 
 function authenticate() {
+    console.log('authenticated')
     return true
 }
 
@@ -39,7 +38,9 @@ document.addEventListener("submit", () => {
     //authenticate
     authenticate();
     //save each input to the corresponding property
-    saveUser(inputs[0].value, inputs[1].value, inputs[2].value);
+    for (const input of inputs) {
+        saveUserProperty(input.value);
+    }
     //save all input user data to localstorage for future use
     locStorage.setItem("username", (user.userName));
     locStorage.setItem("isAuthenticated", (true));
@@ -48,6 +49,7 @@ document.addEventListener("submit", () => {
     const form = document.getElementById("login");
     form.hidden = true    
     createButton();
+    login()
 })
 
 function createButton() {
@@ -58,17 +60,17 @@ function createButton() {
     })
 
 }
+
+function login(){
+    console.log("hello")
+    // const spotIMServer = "https://spotim-demo-chat-server.herokuapp.com"
+    // const socket = io.connect(spotIMServer);
+    // const room = "/spotim/chat";   
+    // socket.on('connect',room,()=>{
+    //     console.log('hello')
+        // })
+}
 function emitButton() {
-    // listen();
-    // sendMessage();
-    const spotIMServer = "https://spotim-demo-chat-server.herokuapp.com"
-    // const spotIMChannel = (`${spotIMServer}spotim/chat`)
-    // console.log(`connecting to ${spotIMChannel}`)
-    const socket = io.connect(spotIMServer);
-    const room = "/spotim/chat";   
-    socket.on('connect',room,()=>{
-        console.log('hello')
-        })
     socket.emit('message',room,(data)=>{
         console.log(data)
     })}
