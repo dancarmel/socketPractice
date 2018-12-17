@@ -27,6 +27,10 @@ function saveUserDataToLocalStorage(){
     locStorage.setItem("imgUrl", (user.imgUrl));
 }
 
+// function embedImage(imageUrl){
+    
+// }
+
 // POST-SUBMIT ACTIONS (HIDE THE FORM AND CREATE THE CHAT LOGIN BUTTON)
 
 function hideForm(id){
@@ -44,12 +48,20 @@ function createButton() {
 
 function createInputField() {
     const inputField = document.createElement("input")
+    inputField.setAttribute("id","userinput")
     inputField.value = `type here`
     const div = document.getElementById("emitter")
     div.appendChild(inputField)
+    return inputField;
+}
+function createChatBox() {
+    const chatbox = document.createElement("div")
+    chatbox.setAttribute("id","chat")
+    const div = document.getElementById("emitter")
+    div.appendChild(chatbox)
     const br = document.createElement("br");
     div.appendChild(br);
-    return inputField;
+    return chatbox;
 }
 
 // START SOCKET TO SPOTIM ROOM
@@ -66,7 +78,10 @@ function connect(){
         message:"hello world"
     }
     socket.on(room, (message)=>{
-        console.log(`message: ${message}`)
+        console.log(`${user.username}: ${message}`)
+        textLine = document.createElement("li")
+        textLine.innerText = `${user.username}: ${message}`
+        chatbox.appendChild(textLine);
     })  ;
 
     return socket;
@@ -78,9 +93,12 @@ document.addEventListener("submit", () => {
     saveUserDataToLocalStorage();
     hideForm('login');   
     let connection = connect();
+    chatbox = createChatBox();
     let textInput = createInputField();
     let sendButton = createButton();
     sendButton.addEventListener('click', () => {
         connection.emit(room, textInput.value)
         })  ;
     })
+
+//Chat UI
