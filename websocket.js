@@ -34,7 +34,7 @@ function hideForm(id){
     form.hidden = true;
 }
 
-let sendButton = function createButton() {
+function createButton() {
     const button = document.createElement("button")
     button.innerHTML = `Send Message`
     let div = document.getElementById("emitter")
@@ -42,12 +42,21 @@ let sendButton = function createButton() {
     return button;
 }
 
+function createInputField() {
+    const inputField = document.createElement("input")
+    inputField.value = `type here`
+    const div = document.getElementById("emitter")
+    div.appendChild(inputField)
+    const br = document.createElement("br");
+    div.appendChild(br);
+    return inputField;
+}
+
 // START SOCKET TO SPOTIM ROOM
 function connect(){
     const socket = io(server);
     socket.on('connect', ()=>{
         console.log('connected')
-        socket.emit(room, emissionObject)
     })
 
     emissionObject ={
@@ -56,10 +65,11 @@ function connect(){
         date:new Date().getTime,
         message:"hello world"
     }
-
     socket.on(room, (message)=>{
         console.log(`message: ${message}`)
-    })
+    })  ;
+
+    return socket;
 }
 
 // POST-SUBMIT EXECUTION : LISTEN FOR THE FORM SUBMIT, THEN RUN AUTHENTICATION, STORAGE, HIDE FORM, CREATE BUTTON AND LAUNCH SOCKET
@@ -67,10 +77,10 @@ document.addEventListener("submit", () => {
     authenticate();
     saveUserDataToLocalStorage();
     hideForm('login');   
-    connect()
-    sendButton();
+    let connection = connect();
+    let textInput = createInputField();
+    let sendButton = createButton();
     sendButton.addEventListener('click', () => {
-      console.log('hi')  ;
+        connection.emit(room, textInput.value)
+        })  ;
     })
-     
-})

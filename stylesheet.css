@@ -19,7 +19,9 @@ header{
     background-color: #283848;
     color:white;
 }
-
+#userinput{
+    margin-bottom:20px;
+}
 input{
     font-family: 'Rubik', sans-serif;
 
