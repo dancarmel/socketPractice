@@ -34,14 +34,12 @@ function hideForm(id){
     form.hidden = true;
 }
 
-function createButton() {
-    const newButton = document.createElement("button")
-    newButton.innerHTML = `Click Here to Emit`
+let sendButton = function createButton() {
+    const button = document.createElement("button")
+    button.innerHTML = `Send Message`
     let div = document.getElementById("emitter")
-    div.appendChild(newButton)
-    newButton.addEventListener('click', () => {
-        launchSocket();
-    })
+    div.appendChild(button)
+    return button;
 }
 
 // START SOCKET TO SPOTIM ROOM
@@ -69,6 +67,10 @@ document.addEventListener("submit", () => {
     authenticate();
     saveUserDataToLocalStorage();
     hideForm('login');   
-    createButton();
+    launchSocket()
+    sendButton();
+    sendButton.addEventListener('click', () => {
+      console.log('hi')  ;
+    })
      
 })
