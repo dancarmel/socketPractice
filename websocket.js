@@ -43,7 +43,7 @@ let sendButton = function createButton() {
 }
 
 // START SOCKET TO SPOTIM ROOM
-function launchSocket(){
+function connect(){
     const socket = io(server);
     socket.on('connect', ()=>{
         console.log('connected')
@@ -67,7 +67,7 @@ document.addEventListener("submit", () => {
     authenticate();
     saveUserDataToLocalStorage();
     hideForm('login');   
-    launchSocket()
+    connect()
     sendButton();
     sendButton.addEventListener('click', () => {
       console.log('hi')  ;
