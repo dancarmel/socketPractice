@@ -7,8 +7,11 @@ let user = {
     password: 'he',
     imgUrl: 'https://new.com'
 }
-function saveUserProperty(property) {
-    user[property] = property;
+
+function setUser(name, pass, img) {
+    user.userName = name;
+    user.password = pass;
+    user.imgUrl = img;
 }
 
 function authenticate() {
@@ -17,10 +20,9 @@ function authenticate() {
 
 function saveUserDataToLocalStorage(){
     let locStorage = window.localStorage;
-    const inputs = document.getElementsByTagName("input");
-    for (const input of inputs) {
-        saveUserProperty(input.value);
-    }
+    let inputs = document.getElementsByTagName("input");
+    setUser(inputs[0].value, inputs[1].value, inputs[2].value);
+    console.log(user)
     //save all input user data to localstorage for future use
     locStorage.setItem("username", (user.userName));
     locStorage.setItem("isAuthenticated", (true));
@@ -29,6 +31,7 @@ function saveUserDataToLocalStorage(){
 
 function createImage(imageUrl){
     let img = document.createElement("img");
+    img.setAttribute("id","avatar")
     img.src = imageUrl;
     return img;
 }
@@ -81,11 +84,12 @@ function connect(){
     }
     socket.on(room, (message)=>{
         console.log(`${user.username}: ${user.imgUrl}: ${message}`)
-        textLine = document.createElement("li")
+        let textLine = document.createElement("li")
+        let image = createImage(user.imgUrl);
         textLine.innerText = `${user.username}: ${message}`
+        textLine.appendChild(image);
         chatbox.appendChild(textLine);
-        let image = createImage(user.imgUrl)
-        chatbox.appendChild(image)
+        
     })  ;
 
     return socket;
