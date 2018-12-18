@@ -2,7 +2,7 @@ const server = "https://spotim-demo-chat-server.herokuapp.com"
 const room = "spotim/chat"; 
 
 // USER DATA AND AUTHENTICATION
-user = {
+let user = {
     userName: 'hi',
     password: 'he',
     imgUrl: 'https://new.com'
@@ -27,9 +27,11 @@ function saveUserDataToLocalStorage(){
     locStorage.setItem("imgUrl", (user.imgUrl));
 }
 
-// function embedImage(imageUrl){
-    
-// }
+function createImage(imageUrl){
+    let img = document.createElement("img");
+    img.src = imageUrl;
+    return img;
+}
 
 // POST-SUBMIT ACTIONS (HIDE THE FORM AND CREATE THE CHAT LOGIN BUTTON)
 
@@ -78,10 +80,12 @@ function connect(){
         message:"hello world"
     }
     socket.on(room, (message)=>{
-        console.log(`${user.username}: ${message}`)
+        console.log(`${user.username}: ${user.imgUrl}: ${message}`)
         textLine = document.createElement("li")
         textLine.innerText = `${user.username}: ${message}`
         chatbox.appendChild(textLine);
+        let image = createImage(user.imgUrl)
+        chatbox.appendChild(image)
     })  ;
 
     return socket;
