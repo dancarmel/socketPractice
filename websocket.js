@@ -54,7 +54,7 @@ function createButton() {
 function createInputField() {
     const inputField = document.createElement("input")
     inputField.setAttribute("id","userinput")
-    inputField.value = `type here`
+    inputField.placeholder = `type here`
     const div = document.getElementById("emitter")
     div.appendChild(inputField)
     return inputField;
@@ -86,9 +86,10 @@ function connect(){
         console.log(`${user.username}: ${user.imgUrl}: ${message}`)
         let textLine = document.createElement("li")
         let image = createImage(user.imgUrl);
-        textLine.innerText = `${user.username}: ${message}`
+        textLine.innerText = `${user.userName}: ${message}`
         textLine.appendChild(image);
         chatbox.appendChild(textLine);
+
         
     })  ;
 
@@ -106,6 +107,7 @@ document.addEventListener("submit", () => {
     let sendButton = createButton();
     sendButton.addEventListener('click', () => {
         connection.emit(room, textInput.value)
+        document.getElementById("userinput").value = ""
         })  ;
     })
 
